@@ -14,6 +14,7 @@ namespace Lab
     {
         static void Main(string[] args)
         {
+            CommandManager manager = new CommandManager();
             if (args.Length == 0)
             {
                 args = null;
@@ -30,7 +31,6 @@ namespace Lab
             args = null;
             args = commandArgs.ToArray();
 
-            CommandManager manager = new CommandManager();
             manager.RunCommand(command, args);
             return;
         }
