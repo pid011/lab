@@ -16,19 +16,31 @@ namespace Lab.Lib
     public class CommandManager
     {
         /// <summary>
-        /// 명령어 목록을 제공합니다.
+        /// 명령어 목록을 가져옵니다.
         /// </summary>
-        public static List<object> Commands
+        public static List<ICommand> Commands
         {
             get
             {
-                return _commands;
+                List<ICommand> commands = new List<ICommand>();
+                foreach (object item in _commands)
+                {
+                    ICommand cmd = item as ICommand;
+                    if (cmd != null)
+                    {
+                        commands.Add(cmd);
+                    }
+                }
+                return commands;
             }
         }
 
         private static List<object> _commands = new List<object>();
 
-
+        /// <summary>
+        /// 최초로 한번만 명령어를 가져옵니다. 
+        /// 플러그인 폴더가 존재하지 않을 시 플러그인 폴더를 생성합니다.
+        /// </summary>
         static CommandManager()
         {
             List<Type> types = new List<Type>();
@@ -48,36 +60,35 @@ namespace Lab.Lib
             AddCommand(types);
         }
 
-        private static void AddCommand(List<Type> types)
+        public static void AddCommand(Type type)
+        {
+            if (type.IsDefined(typeof(CommandAttribute), false))
+            {
+                var ctor = type.GetConstructor(Type.EmptyTypes);
+                if (ctor != null)
+                {
+                    var command = ctor.Invoke(null);
+                    _commands.Add(command);
+                }
+            }
+        }
+        public static void AddCommand(List<Type> types)
         {
             foreach (Type type in types)
             {
-                if (type.IsDefined(typeof(CommandAttribute), false))
-                {
-                    var ctor = type.GetConstructor(Type.EmptyTypes);
-                    if (ctor != null)
-                    {
-                        var command = ctor.Invoke(null);
-                        _commands.Add(command);
-                    }   
-                }
+                AddCommand(type);
             }
-
         }
 
         internal void RunCommand(string command, string[] args)
         {
             bool isSuccessed = false;
-            foreach (object target in Commands)
+            foreach (ICommand target in Commands)
             {
-                ICommand findingCommand = target as ICommand;
-                if (findingCommand != null)
+                if (target.CommandUsage.Command == command)
                 {
-                    if (findingCommand.CommandUsage.Command == command)
-                    {
-                        isSuccessed = true;
-                        findingCommand.ExecuteCommand(args);
-                    }
+                    isSuccessed = true;
+                    target.ExecuteCommand(args);
                 }
             }
             if (! isSuccessed)
