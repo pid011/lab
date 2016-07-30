@@ -57,7 +57,7 @@ namespace Lab.Lib
                 Assembly plugin = Assembly.LoadFile(pluginPath);
                 types.AddRange(plugin.GetExportedTypes());
             }
-            AddCommand(types);
+            AddCommands(types);
         }
 
         public static void AddCommand(Type type)
@@ -72,7 +72,7 @@ namespace Lab.Lib
                 }
             }
         }
-        public static void AddCommand(List<Type> types)
+        public static void AddCommands(List<Type> types)
         {
             foreach (Type type in types)
             {
