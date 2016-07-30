@@ -68,7 +68,6 @@
     <Compile Include="Lib\HelloWorldCommand.cs" />
     <Compile Include="Lib\HelpCommand.cs" />
     <Compile Include="Lib\ICommand.cs" />
-    <Compile Include="Lib\GetCommand.cs" />
     <Compile Include="Lib\Utils\Log.cs" />
     <Compile Include="Lib\Utils\Path.cs" />
     <Compile Include="Lib\Utils\Usage.cs" />
