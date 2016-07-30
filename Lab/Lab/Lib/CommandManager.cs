@@ -60,6 +60,10 @@ namespace Lab.Lib
             AddCommands(types);
         }
 
+        /// <summary>
+        /// 명령어를 추가합니다.
+        /// </summary>
+        /// <param name="type">플러그인에 정의된 클래스 형식입니다.</param>
         public static void AddCommand(Type type)
         {
             if (type.IsDefined(typeof(CommandAttribute), false))
@@ -72,6 +76,10 @@ namespace Lab.Lib
                 }
             }
         }
+        /// <summary>
+        /// 명령어들을 추가합니다.
+        /// </summary>
+        /// <param name="types">플러그인에 정의된 클래스 형식들입니다.</param>
         public static void AddCommands(List<Type> types)
         {
             foreach (Type type in types)
