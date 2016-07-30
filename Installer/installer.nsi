@@ -4,7 +4,7 @@
 !define PRODUCT_NAME "Lab"
 !define PRODUCT_VERSION "1.0"
 !define PRODUCT_PUBLISHER "Sepi"
-!define PRODUCT_WEB_SITE "http://www.seppi.xyz"
+!define PRODUCT_WEB_SITE "http://www.Seppi.xyz"
 !define PRODUCT_DIR_REGKEY "Software\Microsoft\Windows\CurrentVersion\App Paths\Lab.exe"
 !define PRODUCT_UNINST_KEY "Software\Microsoft\Windows\CurrentVersion\Uninstall\${PRODUCT_NAME}"
 !define PRODUCT_UNINST_ROOT_KEY "HKLM"
@@ -16,23 +16,15 @@ SetCompressor lzma
 
 ; MUI Settings
 !define MUI_ABORTWARNING
-!define MUI_ICON "D:\user1\documents\psd\Lab-Icon.ico"
-!define MUI_UNICON "D:\user1\documents\psd\Lab-Icon.ico"
-
-; Language Selection Dialog Settings
-!define MUI_LANGDLL_REGISTRY_ROOT "${PRODUCT_UNINST_ROOT_KEY}"
-!define MUI_LANGDLL_REGISTRY_KEY "${PRODUCT_UNINST_KEY}"
-!define MUI_LANGDLL_REGISTRY_VALUENAME "NSIS:Language"
+!define MUI_ICON "..\..\..\user1\documents\psd\Lab-Icon.ico"
+!define MUI_UNICON "..\..\..\user1\documents\psd\Lab-Icon.ico"
 
 ; Welcome page
 !insertmacro MUI_PAGE_WELCOME
 ; License page
-!define MUI_LICENSEPAGE_CHECKBOX
-!insertmacro MUI_PAGE_LICENSE "D:\Workspace\MIT license.txt"
+!insertmacro MUI_PAGE_LICENSE "..\..\MIT license.txt"
 ; Components page
 !insertmacro MUI_PAGE_COMPONENTS
-; Directory page
-!insertmacro MUI_PAGE_DIRECTORY
 ; Instfiles page
 !insertmacro MUI_PAGE_INSTFILES
 ; Finish page
@@ -42,7 +34,6 @@ SetCompressor lzma
 !insertmacro MUI_UNPAGE_INSTFILES
 
 ; Language files
-!insertmacro MUI_LANGUAGE "English"
 !insertmacro MUI_LANGUAGE "Korean"
 
 ; Reserve files
@@ -57,18 +48,14 @@ InstallDirRegKey HKLM "${PRODUCT_DIR_REGKEY}" ""
 ShowInstDetails show
 ShowUnInstDetails show
 
-Function .onInit
-  !insertmacro MUI_LANGDLL_DISPLAY
-FunctionEnd
-
 Section "Main" SEC01
   SetOutPath "$WINDIR"
   SetOverwrite on
-  File "D:\Workspace\Lab\Lab\Lab\bin\Release\Lab.exe"
+  File "..\Lab\Lab\bin\Release\Lab.exe"
 SectionEnd
 
-Section "XML Documentation comments" SEC02
-  File "D:\Workspace\Lab\Lab\Lab\bin\Release\Lab.xml"
+Section "XML문서주석파일" SEC02
+  File "..\Lab\Lab\bin\Release\Lab.xml"
 SectionEnd
 
 Section -Post
@@ -85,7 +72,7 @@ SectionEnd
 ; Section descriptions
 !insertmacro MUI_FUNCTION_DESCRIPTION_BEGIN
   !insertmacro MUI_DESCRIPTION_TEXT ${SEC01} "주요 파일입니다."
-  !insertmacro MUI_DESCRIPTION_TEXT ${SEC02} "개발이에 필요한 XML문서 주석입니다."
+  !insertmacro MUI_DESCRIPTION_TEXT ${SEC02} "개발에 필요한 XML문서주석입니다."
 !insertmacro MUI_FUNCTION_DESCRIPTION_END
 
 
@@ -95,7 +82,6 @@ Function un.onUninstSuccess
 FunctionEnd
 
 Function un.onInit
-!insertmacro MUI_UNGETLANGUAGE
   MessageBox MB_ICONQUESTION|MB_YESNO|MB_DEFBUTTON2 "$(^Name)을(를) 제거하시겠습니까?" IDYES +2
   Abort
 FunctionEnd
