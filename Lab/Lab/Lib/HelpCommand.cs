@@ -43,8 +43,8 @@ namespace Lab.Lib
                 {
                     foreach (var description in findingCommand.CommandUsage.Description)
                     {
-                        Console.WriteLine(description.Key.ToString());
-                        Console.WriteLine($"\t- {description.Value.ToString()}");
+                        Log.WriteLine(description.Key.ToString());
+                        Log.WriteLine($"\t- {description.Value.ToString()}");
                     }
                 }
             }
