@@ -11,7 +11,7 @@ namespace Lab.Lib
     /// <summary>
     /// 명령어에 필요한 메서드, 속성을 정의합니다.
     /// </summary>
-    interface ICommand
+    public interface ICommand
     {
         /// <summary>
         /// 명령어의 사용방법을 제공합니다.

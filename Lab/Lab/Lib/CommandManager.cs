@@ -4,6 +4,7 @@ using System.Reflection;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO;
 
 using Lab.Lib.Utils;
 
@@ -14,6 +15,9 @@ namespace Lab.Lib
     /// </summary>
     public class CommandManager
     {
+        /// <summary>
+        /// 명령어 목록을 제공합니다.
+        /// </summary>
         public static List<object> Commands
         {
             get
@@ -27,24 +31,41 @@ namespace Lab.Lib
 
         static CommandManager()
         {
+            List<Type> types = new List<Type>();
             Assembly assembly = Assembly.GetExecutingAssembly();
-            Type[] types = assembly.GetExportedTypes();
-            foreach (var type in types)
+            types.AddRange(assembly.GetExportedTypes());
+
+            string pluginDirPath = Utils.Path.GetPluginDirectoryPath;
+
+            List<string> pluginsPath = new List<string>();
+            pluginsPath.AddRange(Directory.GetFiles(pluginDirPath, "*.dll", SearchOption.AllDirectories));
+
+            foreach (string pluginPath in pluginsPath)
             {
-                if (! type.IsDefined(typeof(CommandAttribute), false))
-                {
-                    continue;
-                }
-                var ctor = type.GetConstructor(Type.EmptyTypes);
-                if (ctor != null)
-                {
-                    var command = ctor.Invoke(null);
-                    _commands.Add(command);
-                }
+                Assembly plugin = Assembly.LoadFile(pluginPath);
+                types.AddRange(plugin.GetExportedTypes());
             }
+            AddCommand(types);
         }
 
-        public void RunCommand(string command, string[] args)
+        private static void AddCommand(List<Type> types)
+        {
+            foreach (Type type in types)
+            {
+                if (type.IsDefined(typeof(CommandAttribute), false))
+                {
+                    var ctor = type.GetConstructor(Type.EmptyTypes);
+                    if (ctor != null)
+                    {
+                        var command = ctor.Invoke(null);
+                        _commands.Add(command);
+                    }   
+                }
+            }
+
+        }
+
+        internal void RunCommand(string command, string[] args)
         {
             bool isSuccessed = false;
             foreach (object target in Commands)
@@ -64,8 +85,8 @@ namespace Lab.Lib
                 Log.Error("No command to match.");
             }
         }
-
-        public void ShowHelp()
+        /*
+        internal void ShowHelp()
         {
             foreach (object target in Commands)
             {
@@ -80,5 +101,6 @@ namespace Lab.Lib
                 }
             }
         }
+        */
     }
 }

@@ -32,7 +32,6 @@ namespace Lab
 
             CommandManager manager = new CommandManager();
             manager.RunCommand(command, args);
-
             return;
         }
     }

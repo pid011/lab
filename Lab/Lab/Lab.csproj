@@ -37,6 +37,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Debug\Lab.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -64,12 +65,14 @@
   <ItemGroup>
     <Compile Include="Lib\CommandManager.cs" />
     <Compile Include="Lib\CommandAttribute.cs" />
-    <Compile Include="Lib\HelloWorld.cs" />
-    <Compile Include="Lib\Help.cs" />
+    <Compile Include="Lib\HelloWorldCommand.cs" />
+    <Compile Include="Lib\HelpCommand.cs" />
     <Compile Include="Lib\ICommand.cs" />
+    <Compile Include="Lib\GetCommand.cs" />
     <Compile Include="Lib\Utils\Log.cs" />
+    <Compile Include="Lib\Utils\Path.cs" />
     <Compile Include="Lib\Utils\Usage.cs" />
-    <Compile Include="Lib\Version.cs" />
+    <Compile Include="Lib\VersionCommand.cs" />
     <Compile Include="Run.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
