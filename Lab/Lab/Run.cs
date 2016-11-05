@@ -17,12 +17,7 @@ namespace Lab
             CommandManager manager = new CommandManager();
             if (args.Length == 0)
             {
-                args = null;
-                Log.WriteLine("[ Lab - developer lab ] is started...");
-                Log.Write("> ");
-
-                string input = Console.ReadLine();
-                args = input.Split(' ');
+                args = new string[1] { "help" };
             }
             List<string> commandArgs = args.ToList();
             string command = commandArgs[0];
