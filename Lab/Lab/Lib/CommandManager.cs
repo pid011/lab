@@ -104,22 +104,5 @@ namespace Lab.Lib
                 Log.Error("No command to match.");
             }
         }
-        /*
-        internal void ShowHelp()
-        {
-            foreach (object target in Commands)
-            {
-                ICommand findingCommand = target as ICommand;
-                if (findingCommand != null)
-                {
-                    foreach (var description in findingCommand.CommandUsage.Description)
-                    {
-                        Console.WriteLine(description.Key.ToString());
-                        Console.WriteLine($"\t- {description.Value.ToString()}");
-                    }
-                }
-            }
-        }
-        */
     }
 }

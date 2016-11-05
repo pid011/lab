@@ -36,17 +36,13 @@ namespace Lab.Lib
         /// <param name="args">명령어의 인수입니다.</param>
         public void ExecuteCommand(string[] args)
         {
-            foreach (object target in CommandManager.Commands)
+            foreach (var target in CommandManager.Commands)
             {
-                ICommand findingCommand = target as ICommand;
-                if (findingCommand != null)
-                {
-                    foreach (var description in findingCommand.CommandUsage.Description)
+                    foreach (var description in target.CommandUsage.Description)
                     {
                         Log.WriteLine(description.Key.ToString());
                         Log.WriteLine($"\t- {description.Value.ToString()}");
                     }
-                }
             }
         }
     }
